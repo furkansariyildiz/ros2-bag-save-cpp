@@ -11,6 +11,12 @@ find_package(rclcpp REQUIRED)
 find_package(rosbag2_cpp REQUIRED)
 find_package(topic_tools REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(rosbag2_storage REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(rosidl_typesupport_cpp REQUIRED)
+find_package(rosbag2_transport  REQUIRED)
+
 
 include_directories(include)
 
@@ -21,7 +27,12 @@ ament_target_dependencies(ros2_bag_save
                           rosbag2_cpp
                           topic_tools 
                           std_msgs
+                          std_srvs
+                          rosbag2_storage                         
+                          rosidl_typesupport_cpp
+                          rosbag2_transport 
 )
+
 
 install(TARGETS 
         ros2_bag_save
@@ -34,4 +45,5 @@ install(DIRECTORY
         DESTINATION share/${PROJECT_NAME}
 )
 
+# rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 ament_package()
