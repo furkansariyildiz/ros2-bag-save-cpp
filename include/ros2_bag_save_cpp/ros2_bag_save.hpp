@@ -7,7 +7,7 @@
 #include <rosbag2_storage/storage_options.hpp>
 #include <rosbag2_cpp/writers/sequential_writer.hpp>
 #include <std_srvs/srv/trigger.hpp>
-
+#include <std_msgs/msg/string.hpp>
 #include <string>
 #include <vector>
 
@@ -20,8 +20,6 @@ using namespace std;
 class Ros2BagSave: public rclcpp::Node
 {
     private:
-        // unique_ptr<rosbag2_cpp::Writer> writer_;
-        // unique_ptr<rosbag2_cpp::Reader> reader_;
         std::shared_ptr<rosbag2_cpp::Writer> writer_;
         vector<rclcpp::SubscriptionBase::SharedPtr> dynamic_subscribers_;
         bool is_recording_;
@@ -32,7 +30,7 @@ class Ros2BagSave: public rclcpp::Node
         void startRecording();
         void stopRecording();
         void createSubscriptions();
-        void dynamicTopicCallback(const std::shared_ptr<rclcpp::SerializedMessage> message, const std::string &topic_name);
+        void dynamicTopicCallback(std::shared_ptr<rclcpp::SerializedMessage> message, const std::string &topic_name);
 
     public:
         Ros2BagSave();
