@@ -347,15 +347,20 @@ void Ros2BagSave::createSubscriptions()
     }
 
     const auto &topic_type = it->second[0]; // Assuming only one type per topic
-    auto ts_lib = std::make_shared<rcpputils::SharedLibrary>("librosidl_typesupport_cpp.so");
+    // auto ts_lib = std::make_shared<rcpputils::SharedLibrary>("librosidl_typesupport_cpp.so");
 
     auto callback = [this, target_topic](std::shared_ptr<rclcpp::SerializedMessage> msg) {
         this->dynamicTopicCallback(msg, target_topic);
     };
+    
+    auto type_support_library = rclcpp::get_typesupport_library(topic_type, "rosidl_typesupport_cpp");
+    auto type_support = rclcpp::get_typesupport_handle(topic_type, "rosidl_typesupport_cpp", *type_support_library);
+
+    rclcpp::SubscriptionOptionsWithAllocator<std::allocator<void>> subscription_options;
 
     auto subscription = std::make_shared<rclcpp::GenericSubscription>(
         this->get_node_base_interface().get(),
-        ts_lib,
+        type_support_library,
         target_topic,
         topic_type,
         rclcpp::QoS(10),

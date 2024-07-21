@@ -30,6 +30,7 @@ ament_target_dependencies(ros2_bag_save
                           std_srvs
                           rosbag2_storage                         
                           rosidl_typesupport_cpp
+                          rosidl_default_generators 
                           rosbag2_transport 
 )
 
